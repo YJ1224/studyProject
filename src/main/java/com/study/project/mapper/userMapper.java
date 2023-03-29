@@ -9,5 +9,5 @@ import com.study.project.dto.userDto;
 @Mapper
 public interface userMapper {
 	/* 테스트용도 회원정보 조회 */
-	List<userDto> selectUserList();
+	userDto selectUserList();
 }

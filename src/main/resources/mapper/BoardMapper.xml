@@ -3,8 +3,37 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.study.project.mapper.BoardMapper">
-	<insert id="write" parameterType="com.study.project.dto.BoardDto">
+
+	<!-- 게시판 등록 -->
+	<insert id="write"
+		parameterType="com.study.project.dto.BoardReqDto">
 		INSERT INTO BOARD(user_id, title, content)
-		VALUES (#{user_id},#{title},#{content})
+		VALUES
+		(#{user_id},#{title},#{content})
 	</insert>
+
+	<!-- 게시판 상세조회 -->
+	<select id="boardDetail"
+		resultType="com.study.project.dto.BoardDto" parameterType="int">
+		SELECT A.title, A.content, A.create_date, B.name
+		FROM board A RIGHT JOIN users B
+		ON A.user_id = B.user_id
+		WHERE A.board_id = #{boardId}
+	</select>
+	<select id="boardList" parameterType="Map"
+	resultType="com.study.project.dto.BoardListDto"
+	>
+		SELECT
+			A.board_id,
+			A.title,
+			A.create_date,
+			B.name
+			<!-- count(A.board_id) over() as totalCount -->
+		FROM board A LEFT JOIN users B
+		ON A.user_id = B.user_id
+			ORDER BY create_date DESC
+			OFFSET ( #{page} -1) * #{pageCount} ROWS
+			FETCH NEXT #{pageCount} ROWS ONLY;
+	</select>
+
 </mapper>

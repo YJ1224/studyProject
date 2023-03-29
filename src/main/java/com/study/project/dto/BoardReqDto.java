@@ -7,16 +7,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BoardDto {
-	private String name; //작성자 이름
+public class BoardReqDto {
+	private String user_id; //작성자 아이디
 	private String title; //게시판 제목
 	private String content; //게시판 내용
-	private String create_date; //게시판 등록일자
 
-	public BoardDto(String name, String title, String content, String create_date) {
-		this.name = name;
+	public BoardReqDto(String user_id, String title, String content) {
+		this.user_id = user_id;
 		this.title = title;
 		this.content = content;
-		this.create_date = create_date;
 	}
 }
