@@ -14,12 +14,22 @@
 
 	<!-- 게시판 상세조회 -->
 	<select id="boardDetail"
-		resultType="com.study.project.dto.BoardDto" parameterType="int">
-		SELECT A.title, A.content, A.create_date, B.name
+		resultType="com.study.project.dto.BoardDto" parameterType="Map">
+		SELECT 
+			A.title, 
+			A.content, 
+			A.create_date, 
+			B.name,
+			CASE
+				WHEN A.user_id = #{user_id} THEN 'Y'
+				ELSE 'N'
+			END AS use_YN
 		FROM board A RIGHT JOIN users B
 		ON A.user_id = B.user_id
 		WHERE A.board_id = #{boardId}
 	</select>
+	
+	<!-- 게시판 리스트 조회 -->
 	<select id="boardList" parameterType="Map"
 	resultType="com.study.project.dto.BoardListDto"
 	>
@@ -27,7 +37,11 @@
 			A.board_id,
 			A.title,
 			A.create_date,
-			B.name
+			B.name,
+			CASE
+				WHEN A.user_id = #{user_id} THEN 'Y'
+				ELSE 'N'
+			END AS use_YN
 			<!-- count(A.board_id) over() as totalCount -->
 		FROM board A LEFT JOIN users B
 		ON A.user_id = B.user_id
@@ -35,5 +49,25 @@
 			OFFSET ( #{page} -1) * #{pageCount} ROWS
 			FETCH NEXT #{pageCount} ROWS ONLY;
 	</select>
-
+	
+	<!-- 게시판 수정 -->
+	<update id="boardUpdate" 
+	parameterType="com.study.project.dto.BoardReqDto">
+		UPDATE A
+		SET A.title = #{title}, A.content = #{content}, A.update_date = getdate()
+		FROM board A LEFT JOIN users B
+		ON A.user_id = B.user_id
+		where A.board_id = #{board_id} and A.user_id = #{user_id};
+	</update>
+	
+	<!-- 게시판 삭제 -->
+	<delete id="boardDelete" parameterType="Map">
+		DELETE FROM board
+		WHERE board_id = #{board_id} AND user_id = #{user_id};
+	</delete>
+	
+	<!-- 게시판 전체 갯수 -->
+	<select id="boardTotalCount" resultType="int">
+		SELECT COUNT(*) FROM BOARD
+	</select>
 </mapper>

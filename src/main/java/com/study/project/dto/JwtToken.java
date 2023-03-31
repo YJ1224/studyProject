@@ -8,6 +8,15 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class JwtToken {
-	private String accessToken;
+	private String ACCESS_TOKEN;
+	private String REFRESH_TOKEN;
+	
+	
+	public JwtToken (String ACCESS_TOKEN,String REFRESH_TOKEN) {
+		this.ACCESS_TOKEN = ACCESS_TOKEN;
+		this.REFRESH_TOKEN = REFRESH_TOKEN;
+		
+	}
+	
 	
 }
