@@ -69,7 +69,6 @@ public class BoardService {
 		if (boardDetail == null) {
 			return ApiResponse.ERROR(ResponseMsg.BOARD_NO_DETAIL);
 		}
-		System.out.println(boardDetail);
 		return ApiResponse.OK(boardDetail);
 	}
 

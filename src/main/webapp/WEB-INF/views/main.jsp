@@ -16,6 +16,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <style>
+
 td {
 	padding: 5px;
 	text-align: center;
@@ -25,7 +26,7 @@ td {
 <title>Home</title>
 </head>
 <body>
-	<div class="container">
+	<div class="container" id="main">
 		<div class="jumbotron text-center">
 			<h2>게시판 목록</h2>
 		</div>

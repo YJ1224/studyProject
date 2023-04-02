@@ -22,7 +22,6 @@ public class UserService {
 	
 	//token 값으로 아이디 찾기
 	public String getId(JwtToken jwtToken) {
-		System.out.println(jwtToken);
 		return null;
 	}
 	//로그인
@@ -39,7 +38,6 @@ public class UserService {
 			return ApiResponse.ERROR(ResponseMsg.USER_LOGIN_FAIL);
 		}else {
 			String token = securityService.createToken((String) params.get("user_id"));
-			System.out.println(securityService.getSubject(token));
 			return ApiResponse.OK(new JwtToken(token,token));
 		}
 		
